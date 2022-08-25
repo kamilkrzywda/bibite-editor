@@ -31,5 +31,5 @@ deploy:
     tags:
         - shared
     script:
-        - docker build -t bibites
+        - docker build . -t bibites
         - docker run -d bibites
