@@ -9,28 +9,27 @@ cache:
     paths:
         - node_modules/
 
-# build:
-#     image: node:latest
-#     stage: build
-#     tags:
-#         - shared
-#     script:
-#         - npm install
-#         - npm run build
-#     artifacts:
-#         paths:
-#             - dist
+build:
+    image: node:latest
+    stage: build
+    tags:
+        - shared
+    script:
+        - npm install
+        - npm run build
+    artifacts:
+        paths:
+            - dist
 
 deploy:
     image: docker/compose:latest
     environment:
         name: production
         url: https://bibites.kkhost.pl
-    # dependencies:
-    #     - build
+    dependencies:
+        - build
     tags:
         - shared
     script:
-        - docker-compose down
-        - docker-compose build
-        - docker-compose up
+        - docker build -t bibites
+        - docker run -d bibites
