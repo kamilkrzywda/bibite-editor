@@ -1,10 +1,16 @@
-image: node:latest
+variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+
+services:
+    - docker:dind
 
 cache:
     paths:
         - node_modules/
 
 build:
+    image: node:latest
     stage: build
     tags:
         - shared
@@ -16,7 +22,7 @@ build:
             - dist
 
 deploy:
-    image: node:latest
+    image: docker/compose:latest
     environment:
         name: production
         url: https://bibites.kkhost.pl
