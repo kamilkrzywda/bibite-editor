@@ -33,7 +33,6 @@ deploy:
     tags:
         - shared
     script:
-        - docker stop bibites
-        - docker rm bibites
+        - docker stop bibites || true && docker rm bibites || true
         - docker build . -t bibites
         - docker run -d bibites
