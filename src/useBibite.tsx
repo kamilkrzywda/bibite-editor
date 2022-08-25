@@ -29,7 +29,7 @@ function useBibite() {
                 NodeIn: synapse.NodeIn,
                 NodeOut: synapse.NodeOut,
             }),
-            { ...synapse, Weight: weight },
+            { ...(_.omit(synapse, ['source', 'target']) as BrainSynapse), Weight: weight },
         ];
         const newBibiteData = {
             ...bibiteData,
