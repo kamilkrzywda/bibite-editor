@@ -9,17 +9,17 @@ cache:
     paths:
         - node_modules/
 
-build:
-    image: node:latest
-    stage: build
-    tags:
-        - shared
-    script:
-        - npm install
-        - npm run build
-    artifacts:
-        paths:
-            - dist
+# build:
+#     image: node:latest
+#     stage: build
+#     tags:
+#         - shared
+#     script:
+#         - npm install
+#         - npm run build
+#     artifacts:
+#         paths:
+#             - dist
 
 deploy:
     image: docker/compose:latest
@@ -31,4 +31,7 @@ deploy:
     tags:
         - shared
     script:
+        - ls -la /var/run
+        - docker-compose down
+        - docker-compose build
         - docker-compose up
