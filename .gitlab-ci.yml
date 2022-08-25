@@ -17,10 +17,12 @@ build:
 
 deploy:
     image: node:latest
-    environment: prod
+    environment:
+        name: production
+        url: https://bibites.kkhost.pl
     dependencies:
         - build
     tags:
         - shared
     script:
-        - ls -la
+        - docker-compose up

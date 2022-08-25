@@ -1,0 +1,7 @@
+bibites:
+    image: httpd:latest
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.bibites.rule=Host(`bibites.kkhost.pl`)"
+        - "traefik.http.routers.bibites.entrypoints=web"
+        - "traefik.http.routers.bibites.tls.certresolver=myresolver"
