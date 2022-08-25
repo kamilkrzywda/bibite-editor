@@ -33,7 +33,8 @@ function BrainVisualiser({ brain }: Props) {
     const nodes: GraphNode[] = brain.Nodes.map((node) => ({
         id: node.Index,
         label: `${node.Desc} (${node.Index}, ${node.TypeName})`,
-        fill: node.TypeName === "Input" ? "red" : "blue",
+        fill:
+            node.TypeName === "Input" ? "red" : node.Desc.startsWith("Hidden") ? "yellow" : "blue",
         data: node,
     }));
 
