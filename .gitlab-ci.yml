@@ -14,10 +14,13 @@ build:
     artifacts:
         paths:
             - dist
-# deploy:
-#     image: node:latest
-#     environment: production
-#     tags:
-#         - shared
-#     script:
-#         - npm run build
+
+deploy:
+    image: node:latest
+    environment: production
+    dependencies:
+        - build
+    tags:
+        - shared
+    script:
+        - ls -la
