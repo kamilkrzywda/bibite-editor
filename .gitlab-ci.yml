@@ -17,7 +17,7 @@ build:
 
 deploy:
     image: node:latest
-    environment: production
+    environment: prod
     dependencies:
         - build
     tags:
