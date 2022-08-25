@@ -17,6 +17,7 @@ build:
     script:
         - npm install
         - npm run build
+        - cp Dockerfile ./dist
     artifacts:
         paths:
             - dist
@@ -33,7 +34,7 @@ deploy:
     tags:
         - shared
     script:
-        - ls
+        - mv ./dist/Dockerfile ./
         - docker stop bibites || true && docker rm bibites || true
         - docker build . -t bibites
         - docker run -d bibites
