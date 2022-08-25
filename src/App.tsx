@@ -1,37 +1,48 @@
-import JSONPretty from "react-json-pretty";
-import "react-json-pretty/themes/acai.css";
+import { BrainVisualiser } from './BrainVisualiser';
+import { FileLoader } from './FileLoader';
+import { prettyPrintBibite } from './helpers';
+import useBibite from './useBibite';
 
-import "./App.css";
-import { BrainVisualiser } from "./BrainVisualiser";
-import { FileLoader } from "./FileLoader";
-import useBibite from "./useBibite";
+import { Box, Button, Container, TextareaAutosize } from '@mui/material';
 
 function App() {
     const bibiteHook = useBibite();
     const { fileName, bibiteData, onDropFile, exportFile, setTag } = bibiteHook;
 
     return (
-        <div className="App">
-            {!fileName ? (
-                <div>
-                    <FileLoader onDrop={onDropFile} />
-                </div>
-            ) : (
-                <>
-                    <div>
-                        <BrainVisualiser brain={bibiteData.brain} />
-                    </div>
-                    <div>
-                        <button onClick={exportFile}>Download {fileName}</button>
-                        <button onClick={() => setTag("test")}>setTag to "test"</button>
-                        <button onClick={() => location.reload()}>Reset</button>
-                    </div>
-                    <div className="left" style={{ height: 400, width: 1200, overflowY: "scroll" }}>
-                        <JSONPretty json={JSON.stringify(bibiteData)} />
-                    </div>
-                </>
-            )}
-        </div>
+        <Container maxWidth="xl">
+            <Box sx={{ my: 4, textAlign: 'center' }}>
+                {!fileName ? (
+                    <Box>
+                        <FileLoader onDrop={onDropFile} />
+                    </Box>
+                ) : (
+                    <>
+                        <Box sx={{ height: 1200 }} className="canvasContainer">
+                            <BrainVisualiser brain={bibiteData.brain} />
+                        </Box>
+                        <Box>
+                            <Button onClick={exportFile}>Download {fileName}</Button>
+                            <Button onClick={() => setTag('test')}>setTag to 'test'</Button>
+                            <Button onClick={() => location.reload()}>Reset</Button>
+                        </Box>
+                        <Box
+                            sx={{
+                                height: 600,
+                                overflowY: 'scroll',
+                                textAlign: 'left',
+                            }}
+                        >
+                            <TextareaAutosize
+                                style={{ width: '100%' }}
+                                readOnly
+                                value={prettyPrintBibite(bibiteData)}
+                            />
+                        </Box>
+                    </>
+                )}
+            </Box>
+        </Container>
     );
 }
 

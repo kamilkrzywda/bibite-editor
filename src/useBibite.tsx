@@ -1,9 +1,11 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState } from 'react';
 
-import { Bibite } from "./bibte.type";
+import { Bibite } from './bibte.type';
+
+import { exportFileHelper, fileToString } from './helpers';
 
 function useBibite() {
-    const [fileName, setFileName] = useState<string>("");
+    const [fileName, setFileName] = useState<string>('');
     const [bibiteData, setBibiteData] = useState<Bibite>({
         brain: {
             Nodes: [],
@@ -11,35 +13,28 @@ function useBibite() {
         },
     });
 
-    const exportFile = () => {
-        const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-            JSON.stringify(bibiteData)
-        )}`;
-        const link = document.createElement("a");
-        link.href = jsonString;
-        link.download = fileName;
-        link.click();
-    };
-
-    const setTag = (name: string) => {
+    const setTag = (name: string = 'test') => {
         setBibiteData({
             ...bibiteData,
             genes: {
                 ...bibiteData.genes,
-                tag: "test",
+                tag: name,
             },
         });
     };
 
+    const setWeight = (edgeId: string) => {
+        console.log({ edgeId });
+    };
+
+    const exportFile = () => exportFileHelper(bibiteData, fileName);
+
     const onDropFile = useCallback(async (files: File[]) => {
         setFileName(files[0].name);
-        const data = String.fromCharCode.apply(null, [
-            ...new Uint8Array(await files[0].arrayBuffer()),
-        ]);
-        setBibiteData(JSON.parse(data));
+        setBibiteData(JSON.parse(await fileToString(files[0])));
     }, []);
 
-    return { fileName, bibiteData, exportFile, onDropFile, setTag };
+    return { fileName, bibiteData, exportFile, onDropFile, setTag, setWeight };
 }
 
 export default useBibite;

@@ -1,1 +1,1 @@
-export { default as BrainVisualiser } from "./BrainVisualiser";
+export { default as BrainVisualiser } from './BrainVisualiser';

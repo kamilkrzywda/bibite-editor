@@ -1,18 +1,10 @@
-import { useRef } from "react";
-import { Brain } from "@/bibte.type";
+import { Brain } from '@/bibte.type';
 
-import "./BrainVisualiser.css";
+import './BrainVisualiser.css';
 
-import {
-    GraphCanvas,
-    GraphCanvasRef,
-    GraphEdge,
-    GraphNode,
-    InternalGraphEdge,
-    useSelection,
-    darkTheme,
-    Theme,
-} from "reagraph";
+import { GraphCanvas, GraphEdge, GraphNode, InternalGraphEdge, darkTheme, Theme } from 'reagraph';
+
+import { Box } from '@mui/material';
 
 const myTheme: Theme = {
     ...darkTheme,
@@ -28,13 +20,11 @@ interface Props {
     brain: Brain;
 }
 function BrainVisualiser({ brain }: Props) {
-    const graphRef = useRef<GraphCanvasRef | null>(null);
-
     const nodes: GraphNode[] = brain.Nodes.map((node) => ({
         id: node.Index,
         label: `${node.Desc} (${node.Index}, ${node.TypeName})`,
         fill:
-            node.TypeName === "Input" ? "red" : node.Desc.startsWith("Hidden") ? "yellow" : "blue",
+            node.TypeName === 'Input' ? 'red' : node.Desc.startsWith('Hidden') ? 'yellow' : 'blue',
         data: node,
     }));
 
@@ -46,25 +36,18 @@ function BrainVisualiser({ brain }: Props) {
         data: edge,
     }));
 
-    const { selections, onNodeClick, onCanvasClick } = useSelection({
-        ref: graphRef,
-        nodes: nodes,
-        edges: edges,
-    });
-
-    const nodesFiltered = nodes.filter((node) => {
-        return (
+    const nodesFiltered = nodes.filter(
+        (node) =>
             brain.Synapses.find((edge) => edge.NodeIn === node.id) ||
-            brain.Synapses.find((edge) => edge.NodeOut === node.id)
-        );
-    });
+            brain.Synapses.find((edge) => edge.NodeOut === node.id),
+    );
 
     const onEdgeClick = (edge: InternalGraphEdge) => {
         console.log({ edges, edge });
     };
 
     return edges.length > 0 ? (
-        <div className="canvasContainer">
+        <Box sx={{ width: 1200, height: 1200 }}>
             <GraphCanvas
                 onEdgeClick={onEdgeClick}
                 nodes={nodesFiltered}
@@ -72,9 +55,9 @@ function BrainVisualiser({ brain }: Props) {
                 theme={myTheme}
                 layoutType="treeLr2d"
                 labelType="all"
-                draggable={true}
+                draggable
             />
-        </div>
+        </Box>
     ) : null;
 }
 

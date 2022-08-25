@@ -1,10 +1,10 @@
 export interface BrainNode {
     Type: number;
-    TypeName: "Input" | "TanH" | "Sigmoid" | "ReLu";
+    TypeName: 'Input' | 'TanH' | 'Sigmoid' | 'ReLu';
     Index: string;
     Inov: number;
     Desc: string;
-    Value: number; //float
+    Value: number; // float
     LastInput: number;
     LastOutput: number;
 }
@@ -13,7 +13,7 @@ export interface BrainSynapse {
     Inov: number;
     NodeIn: string;
     NodeOut: string;
-    Weight: number; //float
+    Weight: number; // float
     En: boolean;
 }
 
