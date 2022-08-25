@@ -1,5 +1,5 @@
 variables:
-    DOCKER_HOST: tcp://tower:2375
+    DOCKER_HOST: tcp://192.168.1.5:2375
     DOCKER_DRIVER: overlay2
 
 services:
@@ -23,6 +23,8 @@ build:
 
 deploy:
     image: docker/compose:latest
+    variables:
+        GIT_STRATEGY: none
     environment:
         name: production
         url: https://bibites.kkhost.pl
@@ -31,5 +33,7 @@ deploy:
     tags:
         - shared
     script:
+        - docker stop bibites
+        - docker rm bibites
         - docker build . -t bibites
         - docker run -d bibites
