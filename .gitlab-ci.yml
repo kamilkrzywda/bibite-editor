@@ -5,6 +5,8 @@ cache:
         - node_modules/
 
 serve:
+    tags:
+        - shared
     script:
         - npm install
         - npm run serve
