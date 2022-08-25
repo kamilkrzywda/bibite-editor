@@ -1,5 +1,5 @@
 import { Box, Paper } from '@mui/material';
-import { useDropzone, type DropzoneOptions } from 'react-dropzone';
+import { type DropzoneOptions, useDropzone } from 'react-dropzone';
 
 interface Props extends DropzoneOptions {}
 

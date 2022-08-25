@@ -1,10 +1,9 @@
+import { Box } from '@mui/material';
+import { GraphCanvas, GraphEdge, GraphNode, InternalGraphEdge, Theme, darkTheme } from 'reagraph';
+
 import { Brain } from '@/bibte.type';
 
 import './BrainVisualiser.css';
-
-import { GraphCanvas, GraphEdge, GraphNode, InternalGraphEdge, darkTheme, Theme } from 'reagraph';
-
-import { Box } from '@mui/material';
 
 const myTheme: Theme = {
     ...darkTheme,
@@ -39,7 +38,7 @@ function BrainVisualiser({ brain }: Props) {
     const nodesFiltered = nodes.filter(
         (node) =>
             brain.Synapses.find((edge) => edge.NodeIn === node.id) ||
-            brain.Synapses.find((edge) => edge.NodeOut === node.id),
+            brain.Synapses.find((edge) => edge.NodeOut === node.id)
     );
 
     const onEdgeClick = (edge: InternalGraphEdge) => {

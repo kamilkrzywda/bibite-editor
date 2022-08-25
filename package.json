@@ -8,6 +8,7 @@
         "build": "tsc && vite build",
         "serve": "vite preview --host",
         "format": "prettier --write ./**/*.{js,jsx,ts,tsx,css,md,json}",
+        "prepare": "husky install",
         "lint": "eslint src/**/*.ts src/**/*.tsx",
         "lint:fix": "npm run lint --fix",
         "type-check": "tsc --project tsconfig.json --pretty --noEmit"
@@ -38,6 +39,7 @@
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-react": "^7.31.0",
+        "husky": "^8.0.1",
         "prettier": "^2.7.1",
         "typescript": "^4.6.4",
         "vite": "^3.0.9"

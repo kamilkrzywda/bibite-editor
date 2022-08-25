@@ -2,7 +2,7 @@ import { Bibite } from './bibte.type';
 
 export const exportFileHelper = (bibiteData: Bibite, fileName: string) => {
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-        JSON.stringify(bibiteData),
+        JSON.stringify(bibiteData)
     )}`;
     const link = document.createElement('a');
     link.href = jsonString;

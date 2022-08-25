@@ -1,9 +1,9 @@
+import { Box, Button, Container, TextareaAutosize } from '@mui/material';
+
 import { BrainVisualiser } from './BrainVisualiser';
 import { FileLoader } from './FileLoader';
 import { prettyPrintBibite } from './helpers';
 import useBibite from './useBibite';
-
-import { Box, Button, Container, TextareaAutosize } from '@mui/material';
 
 function App() {
     const bibiteHook = useBibite();
