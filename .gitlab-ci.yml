@@ -37,4 +37,4 @@ deploy:
         - mv ./dist/Dockerfile ./
         - docker stop bibites || true && docker rm bibites || true
         - docker build . -t bibites
-        - docker run -d bibites --name bibites
+        - docker run --name bibites -d bibites

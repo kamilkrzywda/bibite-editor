@@ -23,7 +23,7 @@ function App() {
                     </div>
                     <div>
                         <button onClick={exportFile}>Download {fileName}</button>
-                        <button onClick={() => setTag("test")}>setTag</button>
+                        <button onClick={() => setTag("test")}>setTag to "test"</button>
                         <button onClick={() => location.reload()}>Reset</button>
                     </div>
                     <div className="left" style={{ height: 400, width: 1200, overflowY: "scroll" }}>
