@@ -11,3 +11,11 @@ build:
     script:
         - npm install
         - npm run build
+
+deploy:
+    image: node:latest
+    tags:
+        - shared
+    script:
+        - npm run build
+        - npm run serve
