@@ -11,11 +11,13 @@ build:
     script:
         - npm install
         - npm run build
-
-deploy:
-    image: node:latest
-    tags:
-        - shared
-    script:
-        - npm run build
-        - npm run serve
+    artifacts:
+        paths:
+            - dist
+# deploy:
+#     image: node:latest
+#     environment: production
+#     tags:
+#         - shared
+#     script:
+#         - npm run build
