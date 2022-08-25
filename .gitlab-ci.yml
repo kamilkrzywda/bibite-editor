@@ -5,6 +5,7 @@ cache:
         - node_modules/
 
 build:
+    stage: build
     tags:
         - shared
     script:
