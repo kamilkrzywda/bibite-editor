@@ -1,25 +1,21 @@
-import { Box } from '@mui/material';
-import { GraphCanvas, GraphEdge, GraphNode, InternalGraphEdge, Theme, darkTheme } from 'reagraph';
+import { Box, Input } from '@mui/material';
+import { useConfirm } from 'material-ui-confirm';
+import { GraphCanvas, darkTheme } from 'reagraph';
 
-import { Brain } from '@/bibte.type';
+import { Brain, BrainSynapse } from '@/types/bibte.type';
 
 import './BrainVisualiser.css';
+import { BrainGraphEdge, BrainGraphNode, InternalBrainGraphEdge } from './BrainVisualiser.type';
 
-const myTheme: Theme = {
-    ...darkTheme,
-    canvas: {
-        ...darkTheme.canvas,
-    },
-    node: {
-        ...darkTheme.node,
-    },
-};
-
-interface Props {
+export interface Props {
     brain: Brain;
+    setEdgeWeight: (synapse: BrainSynapse, weight: number) => void;
 }
-function BrainVisualiser({ brain }: Props) {
-    const nodes: GraphNode[] = brain.Nodes.map((node) => ({
+
+function BrainVisualiser({ brain, setEdgeWeight }: Props) {
+    const confirm = useConfirm();
+
+    const nodes: BrainGraphNode[] = brain.Nodes.map((node) => ({
         id: node.Index,
         label: `${node.Desc} (${node.Index}, ${node.TypeName})`,
         fill:
@@ -27,7 +23,7 @@ function BrainVisualiser({ brain }: Props) {
         data: node,
     }));
 
-    const edges: GraphEdge[] = brain.Synapses.map((edge) => ({
+    const edges: BrainGraphEdge[] = brain.Synapses.map((edge) => ({
         id: `${edge.NodeIn}-${edge.NodeOut}`,
         source: edge.NodeIn,
         target: edge.NodeOut,
@@ -41,17 +37,38 @@ function BrainVisualiser({ brain }: Props) {
             brain.Synapses.find((edge) => edge.NodeOut === node.id)
     );
 
-    const onEdgeClick = (edge: InternalGraphEdge) => {
-        console.log({ edges, edge });
+    const onEdgeClick = async (edge: InternalBrainGraphEdge) => {
+        let weight = 0;
+        const synapse = edge.data as BrainSynapse;
+        synapse &&
+            confirm({
+                title: 'Set synapse weight:',
+                content: (
+                    <Input
+                        defaultValue={synapse.Weight}
+                        onBlur={(event) =>
+                            (weight = parseFloat(event.target.value.replaceAll(',', '.')))
+                        }
+                        fullWidth
+                    />
+                ),
+            })
+                .then(() => {
+                    setEdgeWeight(synapse, weight);
+                })
+                .catch(() => {
+                    /* ... */
+                });
     };
 
     return edges.length > 0 ? (
-        <Box sx={{ width: 1200, height: 1200 }}>
+        <Box sx={{ width: '100%', height: '100%' }}>
             <GraphCanvas
                 onEdgeClick={onEdgeClick}
                 nodes={nodesFiltered}
                 edges={edges}
-                theme={myTheme}
+                theme={darkTheme}
+                animated={false}
                 layoutType="treeLr2d"
                 labelType="all"
                 draggable

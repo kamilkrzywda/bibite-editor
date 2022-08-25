@@ -1,13 +1,14 @@
 import { Box, Button, Container, TextareaAutosize } from '@mui/material';
 
+import useBibite from '@/useBibite';
+
 import { BrainVisualiser } from './BrainVisualiser';
 import { FileLoader } from './FileLoader';
 import { prettyPrintBibite } from './helpers';
-import useBibite from './useBibite';
 
 function App() {
     const bibiteHook = useBibite();
-    const { fileName, bibiteData, onDropFile, exportFile, setTag } = bibiteHook;
+    const { fileName, bibiteData, onDropFile, exportFile, setEdgeWeight } = bibiteHook;
 
     return (
         <Container maxWidth="xl">
@@ -18,12 +19,14 @@ function App() {
                     </Box>
                 ) : (
                     <>
-                        <Box sx={{ height: 1200 }} className="canvasContainer">
-                            <BrainVisualiser brain={bibiteData.brain} />
+                        <Box sx={{ height: '90vh' }} className="canvasContainer">
+                            <BrainVisualiser
+                                setEdgeWeight={setEdgeWeight}
+                                brain={bibiteData.brain}
+                            />
                         </Box>
                         <Box>
                             <Button onClick={exportFile}>Download {fileName}</Button>
-                            <Button onClick={() => setTag('test')}>setTag to 'test'</Button>
                             <Button onClick={() => location.reload()}>Reset</Button>
                         </Box>
                         <Box
