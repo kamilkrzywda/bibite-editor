@@ -4,9 +4,9 @@ cache:
     paths:
         - node_modules/
 
-serve:
+build:
     tags:
         - shared
     script:
         - npm install
-        - npm run serve
+        - npm run build
