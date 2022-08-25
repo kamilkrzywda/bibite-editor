@@ -1,3 +1,7 @@
+variables:
+    DOCKER_HOST: ssh://root@tower
+    DOCKER_DRIVER: overlay2
+
 services:
     - docker:dind
 
@@ -27,7 +31,6 @@ deploy:
     tags:
         - shared
     script:
-        - ls -la /var/run
         - docker-compose down
         - docker-compose build
         - docker-compose up
