@@ -1,7 +1,7 @@
 export interface BrainNode {
     Type: number;
     TypeName: 'Input' | 'TanH' | 'Sigmoid' | 'ReLu';
-    Index: string;
+    Index: number;
     Inov: number;
     Desc: string;
     Value: number; // float
@@ -11,8 +11,8 @@ export interface BrainNode {
 
 export interface BrainSynapse {
     Inov: number;
-    NodeIn: string;
-    NodeOut: string;
+    NodeIn: number;
+    NodeOut: number;
     Weight: number; // float
     En: boolean;
 }

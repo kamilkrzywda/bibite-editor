@@ -1,4 +1,4 @@
-import { Box, Input } from '@mui/material';
+import { Box, FormControlLabel, Stack, Switch, TextField } from '@mui/material';
 import { useConfirm } from 'material-ui-confirm';
 import { GraphCanvas, darkTheme } from 'reagraph';
 
@@ -9,14 +9,15 @@ import { BrainGraphEdge, BrainGraphNode, InternalBrainGraphEdge } from './BrainV
 
 export interface Props {
     brain: Brain;
-    setEdgeWeight: (synapse: BrainSynapse, weight: number) => void;
+    setSynspseWeight: (synapse: BrainSynapse, weight: number) => void;
+    removeSynapse: (synapse: BrainSynapse) => void;
 }
 
-function BrainVisualiser({ brain, setEdgeWeight }: Props) {
+function BrainVisualiser({ brain, setSynspseWeight, removeSynapse }: Props) {
     const confirm = useConfirm();
 
     const nodes: BrainGraphNode[] = brain.Nodes.map((node) => ({
-        id: node.Index,
+        id: node.Index.toString(),
         label: `${node.Desc} (${node.Index}, ${node.TypeName})`,
         fill:
             node.TypeName === 'Input' ? 'red' : node.Desc.startsWith('Hidden') ? 'yellow' : 'blue',
@@ -25,36 +26,55 @@ function BrainVisualiser({ brain, setEdgeWeight }: Props) {
 
     const edges: BrainGraphEdge[] = brain.Synapses.map((edge) => ({
         id: `${edge.NodeIn}-${edge.NodeOut}`,
-        source: edge.NodeIn,
-        target: edge.NodeOut,
+        source: edge.NodeIn.toString(),
+        target: edge.NodeOut.toString(),
         label: edge.Weight.toString(),
         data: edge,
     }));
 
     const nodesFiltered = nodes.filter(
         (node) =>
-            brain.Synapses.find((edge) => edge.NodeIn === node.id) ||
-            brain.Synapses.find((edge) => edge.NodeOut === node.id)
+            brain.Synapses.find((edge) => edge.NodeIn.toString() === node.id) ||
+            brain.Synapses.find((edge) => edge.NodeOut.toString() === node.id)
     );
 
     const onEdgeClick = async (edge: InternalBrainGraphEdge) => {
         let weight = 0;
+        let removeEdge = false;
         const synapse = edge.data as BrainSynapse;
         synapse &&
             confirm({
-                title: 'Set synapse weight:',
+                title: 'Edit synapse:',
                 content: (
-                    <Input
-                        defaultValue={synapse.Weight}
-                        onBlur={(event) =>
-                            (weight = parseFloat(event.target.value.replaceAll(',', '.')))
-                        }
-                        fullWidth
-                    />
+                    <Stack spacing={2} direction="column" sx={{ pt: 2 }}>
+                        <TextField
+                            label={'Set synapse weight'}
+                            defaultValue={synapse.Weight}
+                            onBlur={(event) =>
+                                (weight = parseFloat(event.target.value.replaceAll(',', '.')))
+                            }
+                            fullWidth
+                        />
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                                        (removeEdge = event.target.checked)
+                                    }
+                                />
+                            }
+                            label="Remove selected synapse"
+                        />
+                    </Stack>
                 ),
             })
                 .then(() => {
-                    setEdgeWeight(synapse, weight);
+                    if (removeEdge) {
+                        removeSynapse(synapse);
+                    } else {
+                        setSynspseWeight(synapse, weight);
+                    }
+                    removeEdge = false;
                 })
                 .catch(() => {
                     /* ... */
