@@ -2,7 +2,7 @@ import { Box, FormControlLabel, Stack, Switch, TextField } from '@mui/material';
 import { useConfirm } from 'material-ui-confirm';
 import { GraphCanvas, darkTheme } from 'reagraph';
 
-import { Brain, BrainSynapse } from '@/types/bibte.type';
+import { Brain, BrainSynapse } from 'types/bibte.type';
 
 import './BrainVisualiser.css';
 import { BrainGraphEdge, BrainGraphNode, InternalBrainGraphEdge } from './BrainVisualiser.type';
@@ -19,8 +19,7 @@ function BrainVisualiser({ brain, setSynspseWeight, removeSynapse }: Props) {
     const nodes: BrainGraphNode[] = brain.Nodes.map((node) => ({
         id: node.Index.toString(),
         label: `${node.Desc} (${node.Index}, ${node.TypeName})`,
-        fill:
-            node.TypeName === 'Input' ? 'red' : node.Desc.startsWith('Hidden') ? 'yellow' : 'blue',
+        fill: node.TypeName === 'Input' ? 'red' : node.Desc.startsWith('Hidden') ? 'yellow' : 'blue',
         data: node,
     }));
 
@@ -50,9 +49,7 @@ function BrainVisualiser({ brain, setSynspseWeight, removeSynapse }: Props) {
                         <TextField
                             label={'Set synapse weight'}
                             defaultValue={synapse.Weight}
-                            onBlur={(event) =>
-                                (weight = parseFloat(event.target.value.replaceAll(',', '.')))
-                            }
+                            onBlur={(event) => (weight = parseFloat(event.target.value.replaceAll(',', '.')))}
                             fullWidth
                         />
                         <FormControlLabel

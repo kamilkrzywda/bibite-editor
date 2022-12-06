@@ -1,7 +1,7 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { useConfirm } from 'material-ui-confirm';
 
-import { Brain, BrainNode, BrainSynapse } from '@/types/bibte.type';
+import { Brain, BrainNode, BrainSynapse } from 'types/bibte.type';
 
 export interface Props {
     brain: Brain;
@@ -42,9 +42,7 @@ function NewSynapse({ brain, createSynapse }: Props) {
                     <TextField
                         label={'New synapse weight'}
                         defaultValue={Weight}
-                        onBlur={(event) =>
-                            (Weight = parseFloat(event.target.value.replaceAll(',', '.')))
-                        }
+                        onBlur={(event) => (Weight = parseFloat(event.target.value.replaceAll(',', '.')))}
                         fullWidth
                     />
                     <FormControl fullWidth>

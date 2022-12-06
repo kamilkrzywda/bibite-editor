@@ -1,9 +1,7 @@
-import { Bibite } from '@/types/bibte.type';
+import { Bibite } from 'types/bibte.type';
 
 export const exportFileHelper = (bibiteData: Bibite, fileName: string) => {
-    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-        JSON.stringify(bibiteData)
-    )}`;
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(JSON.stringify(bibiteData))}`;
     const link = document.createElement('a');
     link.href = jsonString;
     link.download = fileName;

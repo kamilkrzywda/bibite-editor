@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import { useCallback, useState } from 'react';
 
-import { exportFileHelper, fileToString } from './helpers';
-import { Bibite, BrainSynapse } from './types/bibte.type';
+import { exportFileHelper, fileToString } from 'helpers';
+import { Bibite, BrainSynapse } from 'types/bibte.type';
 
 function useBibite() {
-    const [fileName, setFileName] = useState<string>('');
+    const [fileName, setFileName] = useState('');
     const [data, setData] = useState<Bibite>({
         brain: {
             Nodes: [],
