@@ -1,6 +1,6 @@
 import { GraphEdge, GraphNode, InternalGraphEdge } from 'reagraph';
 
-import { BrainNode, BrainSynapse } from '@/types/bibte.type';
+import { BrainNode, BrainSynapse } from 'types/bibte.type';
 
 export interface BrainGraphNode extends GraphNode {
     data: BrainNode;

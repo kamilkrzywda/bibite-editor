@@ -1,8 +1,9 @@
 {
-  "semi": true,
-  "singleQuote": true,
-  "tabWidth": 4,
-  "importOrder": ["^@/(.*)$", "^[./]"],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 4,
+    "printWidth": 120,
+    "importOrder": ["^(App|types|assets|hooks|theme|helpers|components).*", "^(./|../).*"],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
 }

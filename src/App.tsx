@@ -1,22 +1,14 @@
 import { Box, Button, Container, Stack, TextareaAutosize } from '@mui/material';
 
-import useBibite from '@/useBibite';
-
-import { BrainVisualiser } from './BrainVisualiser';
-import { FileLoader } from './FileLoader';
-import NewSynapse from './NewSynapse/NewSynapse';
-import { prettyPrintBibite } from './helpers';
+import BrainVisualiser from 'components/BrainVisualiser';
+import FileLoader from 'components/FileLoader';
+import NewSynapse from 'components/NewSynapse';
+import { prettyPrintBibite } from 'helpers';
+import useBibite from 'hooks/useBibite';
 
 function App() {
-    const {
-        fileName,
-        bibiteData,
-        onDropFile,
-        exportFile,
-        setSynspseWeight,
-        removeSynapse,
-        createSynapse,
-    } = useBibite();
+    const { fileName, bibiteData, onDropFile, exportFile, setSynspseWeight, removeSynapse, createSynapse } =
+        useBibite();
 
     return (
         <Container maxWidth="xl">
